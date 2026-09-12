@@ -4,7 +4,7 @@ I trained a Deep Q-Network (DQN) — a neural network that learns, by trial and 
 
 **Result in one sentence:** after 100 training games the agent's mean evaluation score went from **492.0 to 504.0 (+12.0)**, a change too small to show that it learned to play better.
 
-- Executed notebook with all outputs: [`pacman_dqn.ipynb`](pacman_dqn.ipynb)
+- Executed notebook with all outputs: [`pacman_dqn.ipynb`](pacman_dqn.ipynb). GitHub's notebook viewer can't play animated GIFs, so the gameplay clips show there as `<IPython.display.Image object>`. The same clips are embedded [below](#gameplay) and saved in [`results/gifs/`](results/gifs/).
 - Evidence files: [`results/`](results/)
 
 ---
@@ -88,6 +88,8 @@ Change in mean score: **+12.0**. The trained agent did better in 2 games and wor
 ### Gameplay
 
 GIFs show at most the first 20 seconds of a game, sped up 4×. The scores cover the whole game.
+
+> **Note on the notebook view:** the executed notebook contains all six gameplay GIFs. GitHub's notebook viewer does not display animated GIF outputs, though, and shows `<IPython.display.Image object>` in their place. They play normally when the notebook is opened in Jupyter, VS Code, or Colab. The same files are shown below and saved in [`results/gifs/`](results/gifs/). The notebook's outputs were left exactly as the run produced them.
 
 | Untrained | Best trained game (game 5, score 760) |
 |---|---|
