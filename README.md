@@ -149,6 +149,13 @@ The agent's practice scores rose early in training, which suggests it picked up 
 | [`results/training_dashboard.png`](results/training_dashboard.png) | Training plot |
 | [`results/gifs/`](results/gifs/) | Untrained, progress, and best trained gameplay |
 
-**Model checkpoints** (`untrained.pt`, `episode_0025.pt` … `episode_0100.pt`, `trained.pt`; 6.4 MB each) are not in this repository to keep it small. They are saved in my local results ZIP (`20260912_160018_989144.zip`) and are available on request. The notebook, settings, and scores in this repository are enough to check the results without them.
+**Model checkpoints** (`untrained.pt`, `episode_0025.pt` … `episode_0100.pt`, `trained.pt`; 6.4 MB each) are not in this repository to keep it small. They are included in the full results ZIP attached to the **[v1.0-results release](https://github.com/kaylinyu-rgb/pacman-dqn-submission/releases/tag/v1.0-results)**:
+
+| Release file | What it is |
+|---|---|
+| `final-run-100-episodes_20260912_160018.zip` (37.6 MB) | **The graded run.** The complete `pacman_runs/` folder the notebook produced: all files in `results/` plus all six checkpoints. |
+| `setup-check-5-episodes_20260912_155642.zip` (12.5 MB) | The 5-episode setup check only; not part of the results above. |
+
+To reload a checkpoint, unzip the final-run file and load `trained.pt` the way section 6a of the notebook does.
 
 A separate 5-episode run was used only as a setup check and is not part of these results.
