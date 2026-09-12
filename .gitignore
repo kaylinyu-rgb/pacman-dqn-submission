@@ -1,0 +1,7 @@
+# Large files kept out of the repository
+*.pt
+*.zip
+pacman_runs/
+.venv/
+.ipynb_checkpoints/
+.DS_Store
