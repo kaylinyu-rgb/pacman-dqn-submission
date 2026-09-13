@@ -64,6 +64,8 @@ I expected the mean evaluation score to **go up a lot**. 100 games is 20 times m
 
 Source: [`results/training_summary.json`](results/training_summary.json), [`results/config.json`](results/config.json), [`results/training.csv`](results/training.csv).
 
+**No run was interrupted, and every run made learning updates:** 5-episode setup check, 500; 100-episode main run, 15,055; 500-episode follow-up, 76,654.
+
 The first 1,000 decisions were random warm-up with no learning, which covered all of game 1 and part of game 2. Every training game ended in game over; none reached the time limit.
 
 ### Before/after evaluation (same five games)
@@ -165,6 +167,20 @@ Change in mean score after 500 episodes: **−12.0** compared with the untrained
 | Best trained game after 500 episodes (game 4, score 790) | Progress sample after 325 episodes (game 1, score 3,120) | Progress sample after 500 episodes (game 1, score 330) |
 |---|---|---|
 | ![Best trained agent after 500 episodes](results/next-experiment-500-episodes/gifs/final_best.gif) | ![After 325 episodes](results/next-experiment-500-episodes/gifs/episode_0325.gif) | ![After 500 episodes](results/next-experiment-500-episodes/gifs/episode_0500.gif) |
+
+**All 20 progress samples.** Each one plays evaluation game 1 (seed 101); the untrained agent scored 350. The untrained GIF is identical to the one in the main run above. Samples 25–100 match the main run's, because the first 100 episodes were the same.
+
+| After 25 (390) | After 50 (270) | After 75 (200) | After 100 (280) |
+|---|---|---|---|
+| ![After 25](results/next-experiment-500-episodes/gifs/episode_0025.gif) | ![After 50](results/next-experiment-500-episodes/gifs/episode_0050.gif) | ![After 75](results/next-experiment-500-episodes/gifs/episode_0075.gif) | ![After 100](results/next-experiment-500-episodes/gifs/episode_0100.gif) |
+| **After 125 (500)** | **After 150 (980)** | **After 175 (480)** | **After 200 (210)** |
+| ![After 125](results/next-experiment-500-episodes/gifs/episode_0125.gif) | ![After 150](results/next-experiment-500-episodes/gifs/episode_0150.gif) | ![After 175](results/next-experiment-500-episodes/gifs/episode_0175.gif) | ![After 200](results/next-experiment-500-episodes/gifs/episode_0200.gif) |
+| **After 225 (200)** | **After 250 (550)** | **After 275 (380)** | **After 300 (250)** |
+| ![After 225](results/next-experiment-500-episodes/gifs/episode_0225.gif) | ![After 250](results/next-experiment-500-episodes/gifs/episode_0250.gif) | ![After 275](results/next-experiment-500-episodes/gifs/episode_0275.gif) | ![After 300](results/next-experiment-500-episodes/gifs/episode_0300.gif) |
+| **After 325 (3,120)** | **After 350 (1,210)** | **After 375 (640)** | **After 400 (320)** |
+| ![After 325](results/next-experiment-500-episodes/gifs/episode_0325.gif) | ![After 350](results/next-experiment-500-episodes/gifs/episode_0350.gif) | ![After 375](results/next-experiment-500-episodes/gifs/episode_0375.gif) | ![After 400](results/next-experiment-500-episodes/gifs/episode_0400.gif) |
+| **After 425 (440)** | **After 450 (280)** | **After 475 (600)** | **After 500 (330)** |
+| ![After 425](results/next-experiment-500-episodes/gifs/episode_0425.gif) | ![After 450](results/next-experiment-500-episodes/gifs/episode_0450.gif) | ![After 475](results/next-experiment-500-episodes/gifs/episode_0475.gif) | ![After 500](results/next-experiment-500-episodes/gifs/episode_0500.gif) |
 
 ### What happened
 
