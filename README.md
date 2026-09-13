@@ -4,6 +4,8 @@ I trained a Deep Q-Network (DQN) — a neural network that learns, by trial and 
 
 **Result in one sentence:** after 100 training games the agent's mean evaluation score went from **492.0 to 504.0 (+12.0)**, a change too small to show that it learned to play better.
 
+**Main submitted result:** the 100-episode run below. I also ran my proposed next experiment afterwards: the same settings with **500 episodes**. That run scored **480.0**, lower than both the untrained network and the 100-episode agent. Its results are reported in full in [Next experiment I ran: 500 episodes](#next-experiment-i-ran-500-episodes).
+
 - Executed notebook with all outputs: [`pacman_dqn.ipynb`](pacman_dqn.ipynb). GitHub's notebook viewer can't play animated GIFs, so the gameplay clips show there as `<IPython.display.Image object>`. The same clips are embedded [below](#gameplay) and saved in [`results/gifs/`](results/gifs/).
 - Evidence files: [`results/`](results/)
 
@@ -129,9 +131,56 @@ The agent's practice scores rose early in training, which suggests it picked up 
 
 **The training budget was very small.** 15,055 learning updates from about 61,000 decisions is a tiny fraction of the millions of decisions typically used to train Atari agents. With this little practice, the agent's behavior is mostly still noise. Only five test games also means one lucky or unlucky game can move the mean by more than 100 points.
 
-## Next experiment
+## Next experiment I ran: 500 episodes
 
-**Change only the number of episodes, from 100 to 500**, keeping exploration at 0.20 and the learning rate at 0.0001. The practice-score average was still moving up and down rather than settling, and the agent had very few learning updates. Five times more training tests whether the lack of improvement came from too little practice rather than from the other two settings. On my laptop it should take roughly 20 minutes.
+After the 100-episode run, I **changed only the number of episodes, from 100 to 500**, keeping exploration at 0.20, the learning rate at 0.0001, and every evaluation setting the same. The practice-score average in the 100-episode run was still moving up and down rather than settling, and the agent had very few learning updates. Five times more training tests whether the lack of improvement came from too little practice rather than from the other two settings.
+
+**Prediction:** more practice would raise the mean evaluation score above 504.
+
+### Training budget (actual)
+
+| Measure | Value |
+|---|---|
+| Completed episodes | 500 of 500 (run completed, not interrupted) |
+| Agent decisions | 307,614 |
+| Learning updates | 76,654 |
+| Elapsed time | 1,187.2 seconds (about 20 minutes, including progress samples) |
+| Hardware | Same Apple M4 laptop, Apple GPU (MPS) |
+
+### Before/after evaluation (same five games)
+
+| Game (seed) | Untrained | After 100 episodes | After 500 episodes |
+|---|---|---|---|
+| 1 (101) | 350 | 280 | 330 |
+| 2 (202) | 500 | 550 | 80 |
+| 3 (303) | 320 | 310 | 460 |
+| 4 (404) | 800 | 620 | 790 |
+| 5 (505) | 490 | 760 | 740 |
+| **Mean** | **492.0** | **504.0** | **480.0** |
+
+Change in mean score after 500 episodes: **−12.0** compared with the untrained network, and **−24.0** compared with the 100-episode agent. No evaluation game reached the time limit. Full data: [`comparison.json`](results/next-experiment-500-episodes/comparison.json).
+
+![500-episode training dashboard](results/next-experiment-500-episodes/training_dashboard.png)
+
+| Best trained game after 500 episodes (game 4, score 790) | Progress sample after 325 episodes (game 1, score 3,120) | Progress sample after 500 episodes (game 1, score 330) |
+|---|---|---|
+| ![Best trained agent after 500 episodes](results/next-experiment-500-episodes/gifs/final_best.gif) | ![After 325 episodes](results/next-experiment-500-episodes/gifs/episode_0325.gif) | ![After 500 episodes](results/next-experiment-500-episodes/gifs/episode_0500.gif) |
+
+### What happened
+
+- **More practice did not improve the evaluation score.** The 500-episode agent beat the 100-episode agent in 3 of 5 games, but it scored only 80 in game 2. Its mean, 480.0, was the lowest of the three.
+- **Practice scores never trended upward.** The 25-game average moved between roughly 600 and 1,000 for all 500 episodes.
+- **Loss stopped rising.** It climbed to about 0.10 by episode 100, then stayed around that level. The network's predictions stabilised, but its play did not improve.
+- **Play was unstable.** The progress samples on game 1 ranged from 200 to 3,120. One checkpoint (episode 325) played that game very well, but later checkpoints did not keep that skill.
+- The first 100 episodes of this run matched the 100-episode run exactly, because both used the same seed. The two runs differ only in the extra 400 episodes.
+
+**My prediction was wrong.** Too little practice does not explain the lack of improvement, at least not on its own.
+
+Evidence: [executed 500-episode notebook](results/next-experiment-500-episodes/pacman_dqn_500_episodes.ipynb), [`config.json`](results/next-experiment-500-episodes/config.json), [`training.csv`](results/next-experiment-500-episodes/training.csv), [`training_summary.json`](results/next-experiment-500-episodes/training_summary.json), [`demo_scores.json`](results/next-experiment-500-episodes/demo_scores.json). The full output folder with all 22 GIFs and checkpoints is in the release (see [Files](#files)).
+
+## Proposed next experiment
+
+**Change only exploration, from 0.20 to 0.10**, keeping 500 episodes and the learning rate at 0.0001. With 20% random moves, many training games are cut short by random mistakes rather than by the agent's own choices, while evaluation uses only 5% random moves. Halving exploration tests whether practice that looks more like the evaluation games produces a more consistent agent.
 
 ---
 
@@ -148,12 +197,14 @@ The agent's practice scores rose early in training, which suggests it picked up 
 | [`results/demo_scores.json`](results/demo_scores.json) | Scores for the progress samples |
 | [`results/training_dashboard.png`](results/training_dashboard.png) | Training plot |
 | [`results/gifs/`](results/gifs/) | Untrained, progress, and best trained gameplay |
+| [`results/next-experiment-500-episodes/`](results/next-experiment-500-episodes/) | The 500-episode follow-up run: executed notebook, settings, log, scores, plot, and selected GIFs |
 
 **Model checkpoints** (`untrained.pt`, `episode_0025.pt` … `episode_0100.pt`, `trained.pt`; 6.4 MB each) are not in this repository to keep it small. They are included in the full results ZIP attached to the **[v1.0-results release](https://github.com/kaylinyu-rgb/pacman-dqn-submission/releases/tag/v1.0-results)**:
 
 | Release file | What it is |
 |---|---|
 | `final-run-100-episodes_20260912_160018.zip` (37.6 MB) | **The graded run.** The complete `pacman_runs/` folder the notebook produced: all files in `results/` plus all six checkpoints. |
+| `next-experiment-500-episodes_20260912_165849.zip` (137.9 MB) | The 500-episode follow-up experiment: its complete output folder, including all 22 GIFs and 22 checkpoints. |
 | `setup-check-5-episodes_20260912_155642.zip` (12.5 MB) | The 5-episode setup check only; not part of the results above. |
 
 To reload a checkpoint, unzip the final-run file and load `trained.pt` the way section 6a of the notebook does.
